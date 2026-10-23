@@ -1,0 +1,39 @@
+
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main() {
+    char s[100];
+    int i = 0, len;
+
+    printf("Enter identifier or declaration: ");
+    fgets(s, sizeof(s), stdin);
+
+    len = strlen(s);
+    while (len > 0 && isspace((unsigned char)s[len - 1]))
+        s[--len] = '\0';
+
+    while (isspace((unsigned char)s[i]))
+        i++;
+
+    if (!(isalpha((unsigned char)s[i]) || s[i] == '_')) {
+        printf("Invalid identifier\n");
+        return 0;
+    }
+
+    i++;
+    while (isalnum((unsigned char)s[i]) || s[i] == '_')
+        i++;
+
+    if (s[i] == '[')
+        printf("Array\n");
+    else if (s[i] == '(')
+        printf("Function\n");
+    else if (s[i] == '\0' || s[i] == ';')
+        printf("Variable\n");
+    else
+        printf("Invalid identifier\n");
+
+    return 0;
+}
