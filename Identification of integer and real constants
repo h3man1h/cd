@@ -1,0 +1,39 @@
+
+#include <stdio.h>
+#include <ctype.h>
+
+int main() {
+    char s[100];
+    int i = 0, dots = 0, before = 0, after = 0;
+    int valid = 1;
+
+    printf("Enter a constant: ");
+    scanf("%99s", s);
+
+    if (s[i] == '+' || s[i] == '-')
+        i++;
+
+    for (; s[i] != '\0'; i++) {
+        if (isdigit((unsigned char)s[i])) {
+            if (dots == 0)
+                before++;
+            else
+                after++;
+        } else if (s[i] == '.') {
+            dots++;
+        } else {
+            valid = 0;
+        }
+    }
+
+    if (!valid || before == 0 || dots > 1 ||
+        (dots == 1 && after == 0)) {
+        printf("Invalid constant\n");
+    } else if (dots == 0) {
+        printf("Integer constant\n");
+    } else {
+        printf("Real constant\n");
+    }
+
+    return 0;
+}
